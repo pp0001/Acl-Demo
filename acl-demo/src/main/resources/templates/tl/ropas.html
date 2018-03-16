@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Ropas : View all</title>
+</head>
+<body>
+<h1 layout:fragment="header">Ropas : View all</h1>
+<div layout:fragment="content" class="container">
+    <div th:if="${param.message}" th:text="${param.message[0]}" class="alert alert-info">Message</div>
+
+    <div class="pull-right">
+        <a href="form.html" th:href="@{/ropa/(form)}">Create Ropa</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td>Ropa ID</td>
+            <td>Ropa Name</td>
+            <td>Operations</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${ropas.empty}">
+            <td colspan="4">No ropa</td>
+        </tr>
+        <tr th:each="ropa : ${ropas}">
+            <td><a href="ropa.html" th:href="@{'/ropa/' + ${ropa.id}}" th:text="${ropa.id}"> Ropa ID</a></td>
+            <td th:text="${ropa.name}"> Ropa Nmae</td>
+            <td>
+            		<a th:href="@{'/ropa/delete/' + ${ropa.id}}" th:text="Delete"></a>
+            		<a th:href="@{'/ropa/modify/' + ${ropa.id}}" th:text="Edit"></a>
+            		<a th:href="@{'/ropa/' + ${ropa.id}}" th:text="View"></a>
+            	</td>
+        </tr>     
+        </tbody>
+    </table>
+    <br/>
+    <hr/>
+    <br/>
+    <div>
+        Find Ropa by id <input id="pId" type="number" name="pId"/> <button onclick="getRopa()">Find</button>
+        <br/><div id="result"></div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getRopa(){
+            $.get( "/ropa/"+$("#pId").val() , function( data ) {
+                $("#result").html("Resulting Ropa is "+data.name);
+            }).fail(function(){
+                $("#result").html("Not Found");
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

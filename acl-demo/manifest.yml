@@ -1,0 +1,14 @@
+---
+applications:
+- name: acl-i320869
+  host: acl-i320869
+  memory: 2G
+  disk_quota: 2G
+  instances: 1
+  path: target/acl-demo-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6
+  services:
+  - postgres-i320869
+  - approuter-app-i320869
+  - applogs-i320869
+  - uaa-i320869
